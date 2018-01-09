@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
@@ -21,7 +23,9 @@ public class MyFirstTest {
 
     @Before
     public void start() {
-        driver = new ChromeDriver();
+//        driver = new ChromeDriver();
+        driver = new InternetExplorerDriver();
+//        driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver, 20);
 
@@ -37,7 +41,7 @@ public class MyFirstTest {
         driver.findElement(By.id("gs_ok0")).click();
 
 
-//        driver.findElement(By.name("q")).sendKeys(Keys.RETURN);
+        driver.findElement(By.name("q")).sendKeys(Keys.RETURN);
 
 //        этот элемент оказывается невидим под "выпадушкой" с вариантами поиска
 //        driver.findElement(By.name("btnK")).click();
