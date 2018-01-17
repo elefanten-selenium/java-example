@@ -13,3 +13,12 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile 'org.seleniumhq.selenium:selenium-java:3.8.1'
 }
+
+// максимальное количество одновременно запускаемых потоков
+test {
+    maxParallelForks = 10
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

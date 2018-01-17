@@ -3,6 +3,7 @@ package ru.stqa.training.selenium;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
@@ -10,8 +11,27 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 public class TestExtendNumberrsBrowser extends BaseExtendTest {
 
 
+    private WebDriverWait webDriverWait;
+
     @Test
     public void myFirstTest() {
+
+        driver.get("http://www.google.com/");
+        driver.findElement(By.name("q")).sendKeys("webdriver");
+
+
+        driver.findElement(By.id("gs_ok0")).click();
+        driver.findElement(By.id("K32")).click();
+        driver.findElement(By.id("gs_ok0")).click();
+
+        driver.findElement(By.name("q")).sendKeys(Keys.RETURN);
+        wait.until(titleIs("webdriver - Поиск в Google"));
+    }
+
+
+    @Test
+    public void mySecondTest() {
+
         driver.get("http://www.google.com/");
         driver.findElement(By.name("q")).sendKeys("webdriver");
         driver.findElement(By.name("q")).sendKeys(Keys.RETURN);
@@ -27,20 +47,6 @@ public class TestExtendNumberrsBrowser extends BaseExtendTest {
 
 
 
-        wait.until(titleIs("webdriver - Поиск в Google"));
-    }
-
-
-    @Test
-    public void mySecondTest() {
-        driver.get("http://www.google.com/");
-        driver.findElement(By.name("q")).sendKeys("webdriver");
-
-        driver.findElement(By.id("gs_ok0")).click();
-        driver.findElement(By.id("K32")).click();
-        driver.findElement(By.id("gs_ok0")).click();
-
-        driver.findElement(By.name("q")).sendKeys(Keys.RETURN);
         wait.until(titleIs("webdriver - Поиск в Google"));
     }
 
