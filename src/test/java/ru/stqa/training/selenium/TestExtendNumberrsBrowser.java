@@ -3,6 +3,8 @@ package ru.stqa.training.selenium;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
@@ -20,7 +22,9 @@ public class TestExtendNumberrsBrowser extends BaseExtendTest {
         driver.findElement(By.name("q")).sendKeys("webdriver");
 
 
+//        wait.until(ExpectedConditions.visibilityOf(By.id("gs_ok0")));
         driver.findElement(By.id("gs_ok0")).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("K32")));
         driver.findElement(By.id("K32")).click();
         driver.findElement(By.id("gs_ok0")).click();
 
