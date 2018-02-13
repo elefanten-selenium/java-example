@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -149,6 +150,60 @@ public class TestCountryList {
     }
 
 
+
+    @Test
+    public void TestGeoZonesSort() {
+
+        driver.get("http://localhost/litecart/admin/");
+        driver.findElement(By.name("username")).sendKeys("admin");
+        driver.findElement(By.name("password")).sendKeys("admin");
+        driver.findElement(By.name("login")).click();
+
+        wait.until(titleIs("My Store"));
+
+        driver.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones");
+        wait.until(titleIs("Geo Zones | My Store"));
+
+
+        // получаем список строк таблицы с заполненными зонами
+        // этот список надо формировать каждый раз заново при возвращении на страницу
+        int countriesNumber = driver.findElements(By.xpath("//*[@class='fa fa-pencil']/../../..")).size();
+        //  //tr[@class='row']//td[4][not(contains(text(),'0'))]
+
+        // проходим по каждой строчке стран с геозонами
+//        for (WebElement countryItem : countriesList) {
+        for (int i = 0; i < countriesNumber ; i++) {
+
+            driver.findElements(By.xpath("//*[@class='fa fa-pencil']/../../../td[3]/a")).get(i).click();
+
+            // получаем список выпадающих списков с зонами
+            List<WebElement> zonesList = driver.findElements(By.xpath("//*[contains(@name,'zone_code')]"));
+            //   //*[@id='table-zones']/tbody/tr/td/a[@id='remove-zone']/../..
+            int zonesNumber = zonesList.size();
+
+            // получаем первое название зоны
+            Select Selector = new Select(zonesList.get(0));
+            String currentZone = Selector.getFirstSelectedOption().getText();
+
+            // проходим по каждой строчке списка зон
+            for (WebElement zoneItem : zonesList) {
+
+                Selector = new Select(zoneItem);
+                String nextZone = Selector.getFirstSelectedOption().getText();
+
+                // выдаём ошибку только в том случае, если названия стран не по алфавиту
+                // ОДНАКО! В задаче не сказано, что при этом ID зон может быть не отсортировано
+                //         сейчас там сортировки по id Уву таковой нет
+                Assert.assertEquals(true, (currentZone.compareTo(nextZone)<=0));
+
+                currentZone = nextZone;
+
+            }
+
+            driver.navigate().back();
+        }
+
+    }
 
 
 
