@@ -14,6 +14,7 @@ import sun.java2d.loops.XORComposite;
 
 import java.util.List;
 
+import static jdk.nashorn.internal.objects.NativeString.concat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 
@@ -44,7 +45,7 @@ public class TestStickers {
         wait.until(titleIs("Online Store | My Store"));
 
         // получаем список карточек товара на главной странице
-        List<WebElement> goodsList = driver.findElements(By.xpath("//li[@class='product column shadow hover-light']"));
+        List<WebElement> goodsList = driver.findElements(By.xpath("//li[contains(@class,'product')]"));
 //        int countGoods = driver.findElements(By.xpath("//*[@id='app-']")).size();
         int countGoods = goodsList.size();
         int countSticker = 0;
@@ -57,15 +58,14 @@ public class TestStickers {
 //        for (int i = 0; i < countElement; i++) {
         for (WebElement goodsItem : goodsList) {
 
-            boolean goodsNew = goodsItem.findElements(By.xpath("//div[@class='sticker new']")).isEmpty();
-            boolean goodsSale = goodsItem.findElements(By.xpath("//div[@class='sticker sale']")).isEmpty();
-//            menuItem.findElement(By.xpath("./a")).click();
-            // просто считаем стикеры
-            countSticker += (goodsNew)?1:0;
-            countSticker += (goodsSale)?1:0;
+            int numberStickers = goodsItem.findElements(By.xpath("//div[@class='sticker']")).size();
 
-            // выдаём ошибку только в том случае, если есть одинаковые стикеры (отрицание исключающего или)
-            Assert.assertEquals(true, !(goodsNew ^ goodsSale) );
+            // выдаём ошибку в том случае, если стикер не 1
+            // "Сценарий должен проверять, что у каждого товара имеется ровно один стикер."
+//            Assert.assertTrue( "Стикер должен быть 1", (numberStickers == 1) );
+
+            // с этим условием делали отладку, на странице стикер или один или ни одного
+            Assert.assertTrue( "Стикеров больше одного:" +numberStickers, numberStickers < 1 );
 
 
         }
