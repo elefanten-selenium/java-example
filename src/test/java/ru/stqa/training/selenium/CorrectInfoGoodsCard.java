@@ -27,8 +27,8 @@ public class CorrectInfoGoodsCard {
 
     @Before
     public void start() {
-//        driver = new ChromeDriver();
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
+//        driver = new FirefoxDriver();
 //        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver, 20);
 
