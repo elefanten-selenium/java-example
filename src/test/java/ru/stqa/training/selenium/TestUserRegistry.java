@@ -94,6 +94,7 @@ public class TestUserRegistry {
 //  При этом формат индекса -- пять цифр.
         driver.findElement(By.className("selection")).click();
         driver.findElement(By.className("select2-search__field")).sendKeys("United States"+Keys.ENTER);
+        // оставляем штат, выбранный по-умолчанию
 
         driver.findElement(By.name("email")).sendKeys(userEmail);
         driver.findElement(By.name("phone")).sendKeys(Keys.HOME+"+12345678901");
