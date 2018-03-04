@@ -17,6 +17,7 @@ import java.io.File;
 import java.security.Key;
 import java.util.List;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
@@ -31,6 +32,10 @@ public class AddGoodsCard {
         driver = new ChromeDriver();
 //        driver = new FirefoxDriver();
 //        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        WebDriverWait wait = new WebDriverWait(driver, 10/*seconds*/);
+//        WebElement element = wait.until(presenceOfElementLocated(By.name("q")));
+//        WebElement element2 = wait.until((WebDriver d) -> d.findElement(By.name("q")));
+
         wait = new WebDriverWait(driver, 20);
 
     }
@@ -117,6 +122,9 @@ public class AddGoodsCard {
 //  \src\test\resources
 //        String filename = "...";
 //        Image image = ImageIO.read(new File(filename));
+    //    преобразовать относительный путь в абсолютный:
+    //    File file = new File("resources/abc.txt");
+    //    String absolutePath = file.getAbsolutePath();
 
         driver.findElement(By.xpath(baseXpath.concat("Date Valid From']/..//input"))).sendKeys(Keys.HOME + "01.02.2018");
         driver.findElement(By.xpath(baseXpath.concat("Date Valid To']/..//input"))).sendKeys(Keys.HOME + "01.04.2018");

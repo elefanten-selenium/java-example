@@ -8,19 +8,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.ToIntFunction;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 
-public class CorrectInfoGoodsCard {
+public class CheckBasket {
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -39,8 +35,20 @@ public class CorrectInfoGoodsCard {
     }
 
     @Test
-    public void TestInfoGoodsLitecart() {
+    public void CheckBasket() {
+//Задание 13. Сделайте сценарий работы с корзиной
+//Сделайте сценарий для добавления товаров в корзину и удаления товаров из корзины.
+//
+//1) открыть главную страницу
+//2) открыть первый товар из списка
+//2) добавить его в корзину (при этом может случайно добавиться товар, который там уже есть, ничего страшного)
+//3) подождать, пока счётчик товаров в корзине обновится
+//4) вернуться на главную страницу, повторить предыдущие шаги ещё два раза, чтобы в общей сложности в корзине было 3 единицы товара
+//5) открыть корзину (в правом верхнем углу кликнуть по ссылке Checkout)
+//6) удалить все товары из корзины один за другим, после каждого удаления подождать, пока внизу обновится таблица
 
+
+//1) открыть главную страницу
         driver.get("http://localhost/litecart/en/");
 //        driver.findElement(By.name("username")).sendKeys("admin");
 //        driver.findElement(By.name("password")).sendKeys("admin");
@@ -49,7 +57,16 @@ public class CorrectInfoGoodsCard {
 //        sendKeys(Keys.chord(Keys.CONTROL, Keys.C));
 
         wait.until(titleIs("Online Store | My Store"));
+// Ожидания
+// driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+// WebDriverWait wait = new WebDriverWait(driver, 10/*seconds*/);  // <-- ждём элемент 10 секунд
+// WebElement element2 = wait.until((WebDriver d) -> d.findElement(By.name("q")));
+// WebElement element = wait.until(presenceOfElementLocated(By.name("q")));
+// WebElement element=wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+//
 
+
+//2) открыть первый товар из списка
         // получаем список карточек товара на главной странице в разделе Campaigns
         String xpathPrgh = "//h3[@class='title'][contains(text(),'Campaigns')]/..//li[contains(@class,'product')]";
         List<WebElement> goodsList = driver.findElements(By.xpath(xpathPrgh));
@@ -66,17 +83,12 @@ public class CorrectInfoGoodsCard {
            WebElement goodsItem = driver.findElement(By.xpath(xpathPrgh));
 
 
-//            а) на главной странице и на странице товара совпадает текст названия товара
-//            б) на главной странице и на странице товара совпадают цены (обычная и акционная)
-//            в) обычная цена зачёркнутая и серая (можно считать, что "серый" цвет это такой, у которого в RGBa представлении одинаковые значения для каналов R, G и B)
-//            г) акционная жирная и красная (можно считать, что "красный" цвет это такой, у которого в RGBa представлении каналы G и B имеют нулевые значения)
-//            (цвета надо проверить на каждой странице независимо, при этом цвета на разных страницах могут не совпадать)
-//            г) акционная цена крупнее, чем обычная (это тоже надо проверить на каждой странице независимо)
-//
-//            Необходимо убедиться, что тесты работают в разных браузерах, желательно проверить во всех трёх ключевых браузерах (Chrome, Firefox, IE).
+//2) добавить его в корзину (при этом может случайно добавиться товар, который там уже есть, ничего страшного)
+//3) подождать, пока счётчик товаров в корзине обновится
+//4) вернуться на главную страницу, повторить предыдущие шаги ещё два раза, чтобы в общей сложности в корзине было 3 единицы товара
+//5) открыть корзину (в правом верхнем углу кликнуть по ссылке Checkout)
+//6) удалить все товары из корзины один за другим, после каждого удаления подождать, пока внизу обновится таблица
 
-            // тупо собираем необходимые параметры
-//            а) на главной странице и на странице товара совпадает текст названия товара
             String nameTop = goodsItem.findElement(By.xpath(xpathPrgh.concat("/a/div[contains(@class,'name')]"))).getText();
 //            б) на главной странице и на странице товара совпадают цены (обычная и акционная)
             String regularPriceTop =  goodsItem.findElement(By.xpath(xpathPrgh.concat("//s[@class='regular-price']"))).getText();
